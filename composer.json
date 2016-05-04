@@ -2,7 +2,8 @@
     "name": "fwsdevelopment/yuki",
     "description": "A api connection with Yuki",
     "license": "MIT",
-    "homepage":"http://frankws.nl/",
+    "homepage": "http://frankws.nl/",
+    "version": "1.0.1",
     "type": "library",
     "authors": [
         {
@@ -13,8 +14,7 @@
 
     "autoload": {
       "psr-4": {
-        "App\\": "app/",
-        "fwsdevelopment\\Yuki\\": "src/"
+        "fwsdevelopment\\": "src/"
       }
     },
     "minimum-stability": "dev",
