@@ -14,7 +14,7 @@
     "autoload": {
       "psr-4": {
         "App\\": "app/",
-        "fwsdevelopment\\Yuki\\": "packages/fwsdevelopment/Yuki/src"
+        "fwsdevelopment\\Yuki\\": "src/"
       }
     },
     "minimum-stability": "dev",
