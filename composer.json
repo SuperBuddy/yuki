@@ -1,0 +1,22 @@
+{
+    "name": "fwsdevelopment/yuki",
+    "description": "A api connection with Yuki",
+    "license": "MIT",
+    "homepage":"http://frankws.nl/",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Frank Wichers Schreur",
+            "email": "frank@superbuddy.nl"
+        }
+    ],
+
+    "autoload": {
+      "psr-4": {
+        "App\\": "app/",
+        "fwsdevelopment\\Yuki\\": "packages/fwsdevelopment/Yuki/src"
+      }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
