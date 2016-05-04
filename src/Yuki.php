@@ -1,6 +1,6 @@
 <?php
 
-namespace fwsdevelopment\yuki;
+namespace FwsDevelopment;
 
 use Carbon\Carbon;
 
