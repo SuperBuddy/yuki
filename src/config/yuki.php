@@ -2,7 +2,7 @@
 return [
 	"access_key" => '',
 
-	"administrationID" => '',
+	"administration_id" => '',
 
 	"admin" => '',
 ];
