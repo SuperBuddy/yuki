@@ -13,7 +13,7 @@ Class Yuki
 
 	public static function connect ($service, $administration = null)
 	{	
-		is_null($administration) ? $administration = config('administration_id') : $administration = $administration;
+		is_null($administration) ? $administration = config('yuki.administration_id') : $administration = $administration;
 		$url = NULL;
 
 		switch($service)
@@ -32,7 +32,7 @@ Class Yuki
 		try
 		{
 			$soap = new Soapclient($url);
-			$res = $soap->Authenticate(['accessKey' => config('access_key')]);
+			$res = $soap->Authenticate(['accessKey' => config('yuki.access_key')]);
 
 			// $adminResult = $soap->AdministrationID($this->session_id, $administration);
 			// $this->session_id = $res->AuthenticateResult;
