@@ -10,7 +10,7 @@ Class Yuki
 
 	private $administrationId;
 
-	public static function connect($service, $administration = config('yuki.administration_id'))
+	public static function connect ($service)
 	{
 		$url = NULL;
 
