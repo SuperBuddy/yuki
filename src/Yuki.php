@@ -3,6 +3,7 @@
 namespace FwsDevelopment;
 
 use Carbon\Carbon;
+use Soapclient;
 
 Class Yuki
 {
@@ -10,20 +11,21 @@ Class Yuki
 
 	private $administrationId;
 
-	public static function connect ($service)
-	{
+	public static function connect ($service, $administration = null)
+	{	
+		is_null($administration) ? $administration = config('administration_id') : $administration = $administration;
 		$url = NULL;
 
 		switch($service)
 		{
 			case 'accounting':
-				$url = "http://api.yukiworks.nl/ws/Accounting.asmx?WSDL";
+				$url = "https://api.yukiworks.nl/ws/Accounting.asmx?WSDL";
 				break;
 			case 'sales':
-				$url = "http://api.yukiworks.nl/ws/Sales.asmx?WSDL";
+				$url = "https://api.yukiworks.nl/ws/Sales.asmx?WSDL";
 				break;
 			default:
-				$url = "http://api.yukiworks.nl/ws/Accounting.asmx?WSDL";
+				$url = "https://api.yukiworks.nl/ws/Accounting.asmx?WSDL";
 				break;
 		}
 
@@ -32,9 +34,9 @@ Class Yuki
 			$soap = new Soapclient($url);
 			$res = $soap->Authenticate(['accessKey' => config('access_key')]);
 
-			$adminResult = $soap->AdministrationID($this->session_id, $administration);
-			$this->session_id = $res->AuthenticateResult;
-			$this->administrationId = $adminResult->AdministrationIDResult;
+			// $adminResult = $soap->AdministrationID($this->session_id, $administration);
+			// $this->session_id = $res->AuthenticateResult;
+			// $this->administrationId = $adminResult->AdministrationIDResult;
 
 			return $soap;
 		}
