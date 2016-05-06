@@ -34,9 +34,9 @@ Class Yuki
 			$soap = new Soapclient($url);
 			$res = $soap->Authenticate(['accessKey' => config('yuki.access_key')]);
 
-			// $adminResult = $soap->AdministrationID($this->session_id, $administration);
-			// $this->session_id = $res->AuthenticateResult;
-			// $this->administrationId = $adminResult->AdministrationIDResult;
+			$adminResult = $soap->AdministrationID($this->session_id, $administration);
+			$this->session_id = $res->AuthenticateResult;
+			$this->administrationId = $adminResult->AdministrationIDResult;
 
 			return $soap;
 		}
@@ -50,15 +50,15 @@ Class Yuki
 	{
 		$xml = "";
 
-		foreach ($entrys as $entry)
+		foreach ($entrys as $key => $entry)
 		{
 			$xml .= "
 				<JournalEntry>
-					<ContactName>".$entry->name."</Contactname>
+					<ContactName>Order</Contactname>
 					<EntryDate>".Carbon::now()->format('Y-m-d')."</EntryDate>
-					<GLAccount>".$entry->grandbookAccount."</GLAccount>
-					<Amount>".$entry->amount."</Amount>
-					<Description>".$entry->description."</Description>
+					<GLAccount>".$key."</GLAccount>
+					<Amount>".$entry."</Amount>
+					<Description>test order</Description>
 				</JournalEntry>
 			";
 		}
@@ -66,7 +66,7 @@ Class Yuki
 		return $xml;
 	}
 
-	public static function insertIntoJournal($journals, $administration_id, $subject)
+	public static function insertOrder($journals, $subject)
 	{
 		try {
 			$soap = $this->connect('accounting');
