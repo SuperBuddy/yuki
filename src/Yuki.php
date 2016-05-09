@@ -50,7 +50,7 @@ Class Yuki
 		}
 	}
 
-	public function makeJournalEntrys($entrys)
+	private function makeJournalEntrys($entrys)
 	{
 		$xml = "";
 
@@ -58,11 +58,11 @@ Class Yuki
 		{
 			$xml .= "
 				<JournalEntry>
-					<ContactName>Order</Contactname>
-					<EntryDate>".Carbon::now()->format('Y-m-d')."</EntryDate>
-					<GLAccount>".$entry['account']."</GLAccount>
-					<Amount>".$entry['bedrag']."</Amount>
-					<Description>test order</Description>
+					<ContactName>" . $entry['name'] . "</ContactName>
+					<EntryDate>" . Carbon::now()->format('Y-m-d') . "</EntryDate>
+					<GLAccount>" . $entry['gla'] . "</GLAccount>
+					<Amount>" . $entry['amount'] . "</Amount>
+					<Description>" . $entry['description'] . "</Description>
 				</JournalEntry>
 			";
 		}
@@ -70,7 +70,7 @@ Class Yuki
 		return $xml;
 	}
 
-	public function insertOrder($journals, $subject)
+	public function insertJournal($journals, $subject)
 	{
 		try {
 			$soap = $this->connect('accounting');
@@ -93,4 +93,6 @@ Class Yuki
 			return $fault->faultstring;
 		}
 	}
+
+
 }
