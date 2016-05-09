@@ -9,7 +9,7 @@ Class Yuki
 {
 	private $session_id;
 
-	private $administrationId;
+	private $administrationId = config('yuki.administrationID');
 
 	public static function connect ($service, $administration = null)
 	{	
@@ -33,10 +33,7 @@ Class Yuki
 		{
 			$soap = new Soapclient($url);
 			$res = $soap->Authenticate(['accessKey' => config('yuki.access_key')]);
-
-			$adminResult = $soap->AdministrationID($this->session_id, $administration);
 			$this->session_id = $res->AuthenticateResult;
-			$this->administrationId = $adminResult->AdministrationIDResult;
 
 			return $soap;
 		}
@@ -50,14 +47,14 @@ Class Yuki
 	{
 		$xml = "";
 
-		foreach ($entrys as $key => $entry)
+		foreach ($entrys as $entry)
 		{
 			$xml .= "
 				<JournalEntry>
 					<ContactName>Order</Contactname>
 					<EntryDate>".Carbon::now()->format('Y-m-d')."</EntryDate>
-					<GLAccount>".$key."</GLAccount>
-					<Amount>".$entry."</Amount>
+					<GLAccount>".$entry['account']."</GLAccount>
+					<Amount>".$entry['bedrag']."</Amount>
 					<Description>test order</Description>
 				</JournalEntry>
 			";
@@ -66,14 +63,14 @@ Class Yuki
 		return $xml;
 	}
 
-	public static function insertOrder($journals, $subject)
+	public function insertOrder($journals, $subject)
 	{
 		try {
 			$soap = $this->connect('accounting');
 
 			$xml = "
 				<Journal xmlns='urn:xmlns:http://www.theyukicompany.com:journal' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
-					<AdministrationID>".$administration_id."<AdministrationID>
+					<AdministrationID>".$this->administrationId."<AdministrationID>
 					<DocumentSubject>".$subject."</DocumentSubject>
 					<JournalType></JournalType>
 					".$this->makeJournalEntrys($journals)."
