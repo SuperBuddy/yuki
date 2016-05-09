@@ -3,7 +3,7 @@
 namespace FwsDevelopment;
 
 use Carbon\Carbon;
-use Soapclient;
+use Soapclient, SoapVar;
 
 Class Yuki
 {
@@ -13,12 +13,14 @@ Class Yuki
 
 	public function __construct()
 	{
-		is_null($this->administrationID ? $this->administrationID = config('yuki.administrationID') : );
+		if(is_null($this->administrationId))
+		{
+			$this->administrationId = config('yuki.administrationID');
+		}
 	}
 
-	public static function connect ($service, $administration = null)
-	{	
-		!is_null($administration) ? $administration = $administration : ;
+	public function connect ($service, $administration = null)
+	{
 		$url = NULL;
 
 		switch($service)
@@ -48,7 +50,7 @@ Class Yuki
 		}
 	}
 
-	public static function makeJournalEntrys($entrys)
+	public function makeJournalEntrys($entrys)
 	{
 		$xml = "";
 
@@ -73,24 +75,22 @@ Class Yuki
 		try {
 			$soap = $this->connect('accounting');
 
-			$xml = "
-				<Journal xmlns='urn:xmlns:http://www.theyukicompany.com:journal' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
-					<AdministrationID>".$this->administrationId."<AdministrationID>
-					<DocumentSubject>".$subject."</DocumentSubject>
-					<JournalType></JournalType>
-					".$this->makeJournalEntrys($journals)."
-				</Journal>
-			";
+			$xml = '
+					<Journal xmlns="urn:xmlns:http://www.theyukicompany.com:journal" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+						<AdministrationID>'.$this->administrationId.'</AdministrationID>
+						<DocumentSubject>'.$subject.'</DocumentSubject>
+						<JournalType>GeneralJournal</JournalType>
+							' . $this->makeJournalEntrys($journals) . '
+					</Journal>';
 
 			$xmlVar = new SoapVar('<ns1:xmlDoc>'.$xml.'</ns1:xmlDoc>', XSD_ANYXML);
-
-			$result = $soap->ProcessJournal($this->session_id, $this->administrationId, $xmlVar);
+			$result = $soap->ProcessJournal(['sessionID' => $this->session_id, 'administrationID' => $this->administrationId, 'xmlDoc' => $xmlVar]);
 
 			return $result->ProcessJournalResult;
 		}
 		catch(SoapFault $fault)
 		{
-			return $fault;
+			return $fault->faultstring;
 		}
 	}
 }
