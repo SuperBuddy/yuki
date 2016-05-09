@@ -9,11 +9,16 @@ Class Yuki
 {
 	private $session_id;
 
-	private $administrationId = config('yuki.administrationID');
+	private $administrationId;
+
+	public function __construct()
+	{
+		is_null($this->administrationID ? $this->administrationID = config('yuki.administrationID') : );
+	}
 
 	public static function connect ($service, $administration = null)
 	{	
-		is_null($administration) ? $administration = config('yuki.administration_id') : $administration = $administration;
+		!is_null($administration) ? $administration = $administration : ;
 		$url = NULL;
 
 		switch($service)
