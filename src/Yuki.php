@@ -59,7 +59,7 @@ Class Yuki
 			$xml .= "
 				<JournalEntry>
 					<ContactName>" . $entry['name'] . "</ContactName>
-					<EntryDate>" . Carbon::now()->format('Y-m-d') . "</EntryDate>
+					<EntryDate>" . $entry['date'] . "</EntryDate>
 					<GLAccount>" . $entry['gla'] . "</GLAccount>
 					<Amount>" . $entry['amount'] . "</Amount>
 					<Description>" . $entry['description'] . "</Description>
