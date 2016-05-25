@@ -109,7 +109,7 @@ Class Yuki
 			$params = [
 				'http' => [
 					'method' => 'POST',
-					'header' => 'Content-Length: ' . $file->getFileSize(),
+					'header' => 'Content-Length: ' . $file->getSize(),
 					'content' => file_get_contents($file)
 				]
 			];
