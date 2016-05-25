@@ -94,5 +94,36 @@ Class Yuki
 		}
 	}
 
+	public function uploadFile($files, $ordner)
+	{
+		// Validate the category
+		$available_ordners = [0,1,2,3,4,5,6,7,8,100,101,102];
+
+		if (!in_array($ordnet, $available_ordners))
+		{
+			return false;
+		}
+		try {
+			$url = "https://api.yukiworks.nl/docs/Upload.aspx" . '?WebServiceAccessKey=' . config('accessKey') . '&Adimnistration='. $this->administrationId . '&FileName=' . urlencode($file->getFileName());
+
+			$params = [
+				'http' => [
+					'method' => 'POST',
+					'header' => 'Content-Length: ' . $file->getFileSize(),
+					'content' => file_get_contents($file)
+				]
+			];
+
+			$ctx = stream_context_create($params);
+			$fp = fopen($url, 'rb', false, $ctx);
+
+			return @stream_get_contents($fp);
+		}
+		catch (Exeption $e)
+		{
+			return $e;
+		}
+
+	}
 
 }
