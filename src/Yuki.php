@@ -99,7 +99,7 @@ Class Yuki
 		// Validate the category
 		$available_ordners = [0,1,2,3,4,5,6,7,8,100,101,102];
 
-		if (!in_array($ordnet, $available_ordners))
+		if (!in_array($ordner, $available_ordners))
 		{
 			return false;
 		}
