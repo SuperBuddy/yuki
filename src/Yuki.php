@@ -94,7 +94,7 @@ Class Yuki
 		}
 	}
 
-	public function uploadFile($files, $ordner)
+	public function uploadFile($file, $ordner)
 	{
 		// Validate the category
 		$available_ordners = [0,1,2,3,4,5,6,7,8,100,101,102];
@@ -104,7 +104,7 @@ Class Yuki
 			return false;
 		}
 		try {
-			$url = "https://api.yukiworks.nl/docs/Upload.aspx" . '?WebServiceAccessKey=' . config('accessKey') . '&Adimnistration='. $this->administrationId . '&FileName=' . urlencode($file->getFileName().'.pdf');
+			$url = "https://api.yukiworks.nl/docs/Upload.aspx" . '?WebServiceAccessKey=' . config('accessKey') . '&Adimnistration='. $this->administrationId . '&FileName=' . urlencode($file->getFileName().".".$file->getExtension());
 
 			$params = [
 				'http' => [
