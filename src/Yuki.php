@@ -104,7 +104,7 @@ Class Yuki
 			return false;
 		}
 		try {
-			$url = "https://api.yukiworks.nl/docs/Upload.aspx" . '?WebServiceAccessKey=' . config('accessKey') . '&Adimnistration='. $this->administrationId . '&FileName=' . urlencode($file->getFileName());
+			$url = "https://api.yukiworks.nl/docs/Upload.aspx" . '?WebServiceAccessKey=' . config('accessKey') . '&Adimnistration='. $this->administrationId . '&FileName=' . urlencode($file->getFileName().'.pdf');
 
 			$params = [
 				'http' => [
