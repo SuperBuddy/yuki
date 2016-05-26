@@ -4,6 +4,7 @@ namespace FwsDevelopment;
 
 use Carbon\Carbon;
 use Soapclient, SoapVar;
+use File;
 
 Class Yuki
 {
@@ -103,27 +104,34 @@ Class Yuki
 		{
 			return false;
 		}
+
 		try {
-			$url = "https://api.yukiworks.nl/docs/Upload.aspx" . '?WebServiceAccessKey=' . config('accessKey') . '&Adimnistration='. $this->administrationId . '&FileName=' . urlencode($file->getFileName().".".$file->getExtension());
+			$url = "https://api.yukiworks.nl/docs/Upload.aspx" . '?WebServiceAccessKey=' . config('yuki.access_key') . '&Administration='. $this->administrationId . '&FileName=' . urlencode($file->getFileName().".".$file->getExtension());
+
+			$file_content = file_get_contents($file->getRealPath());
+
+			$type = File::mimeType($file->getRealPath());
 
 			$params = [
 				'http' => [
 					'method' => 'POST',
-					'header' => 'Content-Length: ' . $file->getSize(),
-					'content' => file_get_contents($file)
+					'header' => 'Content-Type: ' . $type."\r\n".
+								'Content-Length: ' . $file->getSize(),
+					'content' => $file_content
 				]
 			];
 
 			$ctx = stream_context_create($params);
 			$fp = fopen($url, 'rb', false, $ctx);
 
-			return @stream_get_contents($fp);
+			$response = @stream_get_contents($fp);
 		}
 		catch (Exeption $e)
 		{
 			return $e;
 		}
 
+		return $response;
 	}
 
 }
