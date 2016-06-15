@@ -12,14 +12,30 @@ Class Yuki
 
 	private $administrationId;
 
+	/**
+     * @author Frank Wichers Schreur <frank@superbuddy.nl>
+     *
+     * Sets the administration id.
+     *
+     */
 	public function __construct()
 	{
-		if(is_null($this->administrationId))
+		if (is_null($this->administrationId))
 		{
 			$this->administrationId = config('yuki.administrationID');
 		}
 	}
 
+	/**
+     * @author Frank Wichers Schreur <frank@superbuddy.nl>
+     *
+     * Connects to the Yuki api.
+     *
+     * @param $service = the serivice you want to connect to.
+     * @param $administration = if left null. The current administration.
+     *
+     * @return Soap object
+     */
 	public function connect ($service, $administration = null)
 	{
 		$url = NULL;
@@ -51,6 +67,15 @@ Class Yuki
 		}
 	}
 
+	/**
+     * @author Frank Wichers Schreur <frank@superbuddy.nl>
+     *
+     * Makes the journal entry's for memorial booking's.
+     *
+     * @param Array $entrys
+     *
+     * @return xml string
+     */
 	private function makeJournalEntrys($entrys)
 	{
 		$xml = "";
@@ -71,6 +96,16 @@ Class Yuki
 		return $xml;
 	}
 
+	/**
+     * @author Frank Wichers Schreur <frank@superbuddy.nl>
+     *
+     * Makes the memorial bookings.
+     *
+     * @param Array $journals
+     * @param String $subject
+     *
+     * @return Soap result.
+     */
 	public function insertJournal($journals, $subject)
 	{
 		try {
@@ -95,6 +130,16 @@ Class Yuki
 		}
 	}
 
+	/**
+     * @author Frank Wichers Schreur <frank@superbuddy.nl>
+     *
+     * Uploads the file to Yuki
+     *
+     * @param Files $file
+     * @param Integer $ordner
+     *
+     * @return Response
+     */
 	public function uploadFile($file, $ordner)
 	{
 		// Validate the category
@@ -133,5 +178,4 @@ Class Yuki
 
 		return $response;
 	}
-
 }
