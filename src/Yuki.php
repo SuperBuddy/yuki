@@ -1,6 +1,6 @@
 <?php
 
-namespace FwsDevelopment;
+namespace SuperBuddy;
 
 use Carbon\Carbon;
 use Soapclient, SoapVar;
