@@ -1,5 +1,5 @@
 {
-    "name": "fwsdevelopment/yuki",
+    "name": "superbuddy/yuki",
     "description": "A api connection with Yuki",
     "license": "MIT",
     "homepage": "http://frankws.nl/",
@@ -14,7 +14,7 @@
 
     "autoload": {
       "psr-4": {
-        "FwsDevelopment\\": "src/"
+        "SuperBuddy\\": "src/"
       }
     },
     "minimum-stability": "dev",
